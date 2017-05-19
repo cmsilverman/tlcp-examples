@@ -4,7 +4,7 @@
 [boolToNat:((Option Unit)->Nat)<-{b:(Option Unit).(| (cvtUnit (? b)) (++0))}
 [a:(Ref Nat)<-(ref 0)
 [b:(Ref Nat)<-(ref 0)
-($ (:= b (!a)) (:= a (++0)) (ifz (!b) (ifz (!a) :-/ (++(!b))) :-/))
+($ (:= b (!a)) (:= a (++0)) (ifz (boolToNat tru) (ifz (!b) (ifz (!a) :-/ (++(!b))) :-/) (boolToNat tru)))
 ]
 ]
 ]
