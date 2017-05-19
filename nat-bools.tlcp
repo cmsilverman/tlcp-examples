@@ -1,0 +1,7 @@
+[tru:Nat<-0
+[fls:Nat<-(++0)
+[not:(Nat->Nat)<-{b:Nat.(ifz b fls tru)}
+[and:(Nat->(Nat->Nat))<-{a:Nat.{b:Nat.(ifz a b fls)}}
+[or:(Nat->(Nat->Nat))<-{a:Nat.{b:Nat.(ifz a tru b)}}
+((or ((and tru) fls)) (not fls))
+]]]]]
