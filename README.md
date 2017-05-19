@@ -1,7 +1,7 @@
 # tlcp-examples
-feel free to send me like...those requests to push or whatever. I forget how this site works.
+feel free to send me like...those requests to push or whatever github does. I forget how this site works.
 
-also if you know how to write "fix" or even how to add these inductively defined numbers without recursion please tell me I can't figure out it :(
+also if you know how to write "fix" or even how to add these inductively defined numbers without recursion please let me know I can't figure it out :(
 
 files so far:
 err-bools.tlcp -- uses error stuff to make booleans. returns NONE (as unit)
