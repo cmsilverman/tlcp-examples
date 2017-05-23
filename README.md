@@ -1,9 +1,10 @@
 # tlcp-examples
-feel free to send me like...those requests to push or whatever github does. I forget how this site works.
+Feel free to fork and issue pull requests. Details of examples found below. Looking for people to write "fix" in tlcp and inductively defined numbers without recursion. 
 
-also if you know how to write "fix" or even how to add these inductively defined numbers without recursion please let me know I can't figure it out :(
+# Files
 
-files so far:
-err-bools.tlcp -- uses error stuff to make booleans. returns NONE (as unit)
-err-medium.tlcp -- I thought this was "medium" difficulty but I haven't written anything harder. Uses a lot of the grammar but doesn't do anything cool. returns 1
-nat-bools.tlcp -- uses nats to make booleans. probably the easiest one. returns 0
+| File Name     | Returns       | Difficulty| Description |
+| ------------- | ------------- | ------------- | ------------- |
+| err-bools.tlcp | NONE (as Unit) | ? | uses error stuff to make booleans |
+| err-medium.tlcp  | 1 | "Medium" | difficulty, uses lots of the grammar but doesn't do anything cool |
+| nat-bools.tlcp | 0 | "Easy" | uses nats to make booleans|
