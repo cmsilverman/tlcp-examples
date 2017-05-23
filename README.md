@@ -4,7 +4,15 @@ Feel free to fork and issue pull requests. Details of examples found below. Look
 # Files
 
 | File Name     | Returns       | Difficulty| Description |
-| ------------- | ------------- | ------------- | ------------- |
+| ------------- | :------------: | :-------------: | ------------- |
+| andff.tlcp | 1 | "Easy" | tests (false and false)|
+| andft.tlcp | 1 | "Easy" | tests (false and true)|
+| andtt.tlcp | 0 | "Easy" | tests (true and true)|
+| orff.tlcp | 1 | "Easy" | tests (false or false)|
+| orft.tlcp | 0 | "Easy" | tests (false or true)|
+| ortf.tlcp | 0 | "Easy" | tests (true or false)|
+| nott.tlcp | 1 | "Easy" | tests (not true)|
+| notf.tlcp | 0 | "Easy" | tests (not false)|
 | err-bools.tlcp | NONE (as Unit) | ? | uses error stuff to make booleans |
 | err-medium.tlcp  | 1 | "Medium"| uses lots of the grammar but doesn't do anything cool |
 | nat-bools.tlcp | 0 | "Easy" | uses nats to make booleans|
