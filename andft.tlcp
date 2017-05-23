@@ -1,0 +1,4 @@
+[tru:Nat<-0
+[fls:Nat<-(++0)
+[and:(Nat->(Nat->Nat))<-{a:Nat.{b:Nat.(ifz a b fls)}}
+((and fls) tru)]]]
