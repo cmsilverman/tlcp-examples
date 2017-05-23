@@ -1,0 +1,4 @@
+[tru:Nat<-0
+[fls:Nat<-(++0)
+[not:(Nat->Nat)<-{b:Nat.(ifz b fls tru)}
+(not fls)]]]
