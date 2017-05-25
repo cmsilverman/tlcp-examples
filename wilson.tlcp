@@ -1,0 +1,147 @@
+// Now with input variable at top for easier use
+// This script returns 1 if Wilson's Theorem holds from 2 to input
+// Since Wilson's Theorem is a theorem, any other result means either this
+// program or your interpreter is broken
+// I've tested this program a few times, so I think it works.
+// Uses options, fails, and catches for more variety of testing
+[input : Nat <- (++ (++ (++ (++ (++ 0)))))
+[sumr : (Ref (Nat -> (Nat -> Nat))) <-
+    (ref {a:Nat . {b:Nat . 0}})
+    [sum : (Nat -> (Nat -> Nat)) <-
+        {a:Nat . {b:Nat
+	.
+	    (ifz a b (((! sumr) (-- a)) (++ b)))
+	}}
+	($ (:= sumr sum)
+	   [prodr : (Ref (Nat -> (Nat -> Nat))) <-
+	       (ref {a:Nat . {b:Nat . 0}})
+	       [prod : (Nat -> (Nat -> Nat)) <-
+	            {a:Nat . {b:Nat
+		    .
+		        (ifz a 0 ((sum b) (((! prodr) (-- a)) b)))
+		    }}
+		    ($ (:= prodr prod)
+		       [factr : (Ref (Nat -> Nat)) <-
+		           (ref {a:Nat . 0})
+			   [fact : (Nat -> Nat) <-
+			       {n:Nat
+			       .
+			           (ifz n (++ 0) ((prod n) ((! factr) (-- n))))
+			       }
+			       ($ (:= factr fact)
+			          [diffr : (Ref (Nat -> (Nat -> Nat))) <-
+				      (ref {a:Nat . {b:Nat . 0}})
+				      [diff : (Nat -> (Nat -> Nat)) <-
+				          {a:Nat . {b:Nat
+					  .
+					      (ifz a 0 (ifz b a (((! diffr) (-- a)) (-- b))))
+					  }}
+					  ($ (:= diffr diff)
+					     [lte : (Nat -> (Nat -> Nat)) <-
+						 {a:Nat . {b:Nat
+						 .
+						     (ifz ((diff a) b) (++ 0) 0)
+					         }}
+						 [lt : (Nat -> (Nat -> Nat)) <-
+						     {a:Nat . {b:Nat
+						     .
+						         (ifz ((lte a) b) 0 (ifz ((lte b) a) (++ 0) 0))
+						     }}
+						     [pair : (Nat -> (Nat -> (Nat -> Nat))) <-
+						         {f:Nat . {s:Nat
+							 .
+							     {sel:Nat . (ifz sel f s)}
+							 }}
+							 [first : ((Nat -> Nat) -> Nat) <-
+							     {p:(Nat -> Nat) . (p 0)}
+							     [second : ((Nat -> Nat) -> Nat) <-
+							         {p:(Nat -> Nat) . (p (++ 0))}
+								 [divmodr : (Ref (Nat -> (Nat -> (Nat -> Nat)))) <-
+								     (ref {a:Nat . {b:Nat . {sel:Nat . 0}}})
+								     [divmod : (Nat -> (Nat -> (Nat -> Nat))) <-
+								         {a:Nat . {b:Nat
+									 .
+									     (ifz b :-/
+									         (ifz ((lt a) b)
+										     [v:(Nat -> Nat) <- (((! divmodr) ((diff a) b)) b)
+										         ((pair (++ (first v))) (second v))
+										     ]
+										     ((pair 0) a)
+										 )
+								             )
+									 }}
+									 ($ (:= divmodr divmod)
+									    [two:Nat <- (++ (++ 0))
+									        [three:Nat <- (++ two)
+										    [twenty:Nat <- ((prod (++ three)) (++ (++ three)))
+										        [seven:Nat <- ((sum three) (++ (++ two)))
+											    [eq : (Nat -> (Nat -> Nat)) <-
+											        {a:Nat . {b:Nat
+												.
+												    ((prod ((lte a) b)) ((lte b) a))
+												}}
+											        [wilsonr : (Ref ((Nat -> Nat) -> (Option (Nat -> Nat)))) <-
+											            (ref {f:(Nat -> Nat) . (SOME f)})
+												    [wilson : ((Nat -> Nat) -> (Option (Nat -> Nat))) <-
+												        {p:(Nat -> Nat)
+													.
+													    (ifz ((lte (first p)) input)
+													        (NONE (Nat -> Nat))
+														(ifz ((eq (second ((divmod (second p)) (first p)))) (-- (first p)))
+														    :-/
+														    (SOME ((pair ((prod (first p)) (second p))) (++ (first p))))
+														)
+													    )
+													}
+													($ (:= wilsonr wilson)
+													   [start : (Ref (Nat -> Nat)) <- (ref ((pair two) (++ 0)))
+													       [wilsontr : (Ref (Unit -> Unit)) <-
+													           (ref {u:Unit . ()})
+													    	   [wilsont : (Unit -> Unit) <-
+													               {u:Unit
+													               . 
+													                   [next:(Option (Nat -> Nat)) <- (wilson (! start))
+															       (| ($ (:= start (? next))
+															             ((! wilsontr) ())
+																  )
+																  ()
+															       )
+															   ]
+														       }
+														       ($ (:= wilsontr wilsont)
+														          (| ({u:Unit . (++ 0)} (wilsont ()))
+															     0
+															  )
+														       )  
+														   ]
+													       ]
+													   ]
+												        )
+												    ]
+											        ]
+											    ]
+											]
+										    ]
+										]
+									    ]
+									 )
+								     ]
+								 ]
+							     ]
+							 ]
+						     ]
+						 ]
+					     ]
+					  )
+				      ]
+				  ]
+			       )
+			   ]
+		       ]
+		    )
+	       ]
+	   ]
+	)
+    ]
+]
+]

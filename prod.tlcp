@@ -1,0 +1,23 @@
+[sumr : (Ref (Nat -> (Nat -> Nat))) <-
+    (ref {a:Nat . {b:Nat . 0}})
+    [sum : (Nat -> (Nat -> Nat)) <-
+        {a:Nat . {b:Nat
+	.
+	    (ifz a b (((! sumr) (-- a)) (++ b)))
+	}}
+	($ (:= sumr sum)
+	   [prodr : (Ref (Nat -> (Nat -> Nat))) <-
+	       (ref {a:Nat . {b:Nat . 0}})
+	       [prod : (Nat -> (Nat -> Nat)) <-
+	            {a:Nat . {b:Nat
+		    .
+		        (ifz a 0 ((sum b) (((! prodr) (-- a)) b)))
+		    }}
+		    ($ (:= prodr prod)
+	   	       ((prod (++ (++ 0))) (++ (++ 0)))
+		    )
+	       ]
+	   ]
+	)
+    ]
+]

@@ -1,0 +1,12 @@
+[sumr : (Ref (Nat -> (Nat -> Nat))) <-
+    (ref {a:Nat . {b:Nat . 0}})
+    [sum : (Nat -> (Nat -> Nat)) <-
+        {a:Nat . {b:Nat
+	.
+	    (ifz a b (((! sumr) (-- a)) (++ b)))
+	}}
+	($ (:= sumr sum)
+	   ((sum (++ 0)) (++ 0))
+	)
+    ]
+]

@@ -1,0 +1,11 @@
+// I did not realize this language supported recursion, but it does
+// 13.5.1 is a related problem
+[f1 : (Ref (Nat -> Nat)) <-
+    (ref {a:Nat . a})
+    [f : (Nat -> Nat) <-
+        {a:Nat . ((! f1) a)}
+	($ (:= f1 f)
+	   (f 0)
+	)
+    ]
+]
