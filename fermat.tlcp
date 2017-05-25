@@ -1,0 +1,198 @@
+// Should terminate iff Fermat's Last Theorem is false (it isn't)
+[sumr : (Ref (Nat -> (Nat -> Nat))) <-
+    (ref {a:Nat . {b:Nat . 0}})
+    [sum : (Nat -> (Nat -> Nat)) <-
+        {a:Nat . {b:Nat
+	.
+	    (ifz a b (((! sumr) (-- a)) (++ b)))
+	}}
+	($ (:= sumr sum)
+	   [prodr : (Ref (Nat -> (Nat -> Nat))) <-
+	       (ref {a:Nat . {b:Nat . 0}})
+	       [prod : (Nat -> (Nat -> Nat)) <-
+	            {a:Nat . {b:Nat
+		    .
+		        (ifz a 0 ((sum b) (((! prodr) (-- a)) b)))
+		    }}
+		    ($ (:= prodr prod)
+		       [factr : (Ref (Nat -> Nat)) <-
+		           (ref {a:Nat . 0})
+			   [fact : (Nat -> Nat) <-
+			       {n:Nat
+			       .
+			           (ifz n (++ 0) ((prod n) ((! factr) (-- n))))
+			       }
+			       ($ (:= factr fact)
+			          [diffr : (Ref (Nat -> (Nat -> Nat))) <-
+				      (ref {a:Nat . {b:Nat . 0}})
+				      [diff : (Nat -> (Nat -> Nat)) <-
+				          {a:Nat . {b:Nat
+					  .
+					      (ifz a 0 (ifz b a (((! diffr) (-- a)) (-- b))))
+					  }}
+					  ($ (:= diffr diff)
+					     [lte : (Nat -> (Nat -> Nat)) <-
+						 {a:Nat . {b:Nat
+						 .
+						     (ifz ((diff a) b) (++ 0) 0)
+					         }}
+						 [lt : (Nat -> (Nat -> Nat)) <-
+						     {a:Nat . {b:Nat
+						     .
+						         (ifz ((lte a) b) 0 (ifz ((lte b) a) (++ 0) 0))
+						     }}
+						     [pair : (Nat -> (Nat -> (Nat -> Nat))) <-
+						         {f:Nat . {s:Nat
+							 .
+							     {sel:Nat . (ifz sel f s)}
+							 }}
+							 [first : ((Nat -> Nat) -> Nat) <-
+							     {p:(Nat -> Nat) . (p 0)}
+							     [second : ((Nat -> Nat) -> Nat) <-
+							         {p:(Nat -> Nat) . (p (++ 0))}
+								 [divmodr : (Ref (Nat -> (Nat -> (Nat -> Nat)))) <-
+								     (ref {a:Nat . {b:Nat . {sel:Nat . 0}}})
+								     [divmod : (Nat -> (Nat -> (Nat -> Nat))) <-
+								         {a:Nat . {b:Nat
+									 .
+									     (ifz b :-/
+									         (ifz ((lt a) b)
+										     [v:(Nat -> Nat) <- (((! divmodr) ((diff a) b)) b)
+										         ((pair (++ (first v))) (second v))
+										     ]
+										     ((pair 0) a)
+										 )
+								             )
+									 }}
+									 ($ (:= divmodr divmod)
+									    [two:Nat <- (++ (++ 0))
+									        [three:Nat <- (++ two)
+										    [twenty:Nat <- ((prod (++ three)) (++ (++ three)))
+										        [seven:Nat <- ((sum three) (++ (++ two)))
+											    [eq:(Nat -> (Nat -> Nat)) <-
+											        {a:Nat . {b:Nat
+												.
+											            ((prod ((lte a) b)) ((lte b) a))
+											        }}
+											    	[expr:(Ref (Nat -> (Nat -> Nat))) <-
+											            (ref {a:Nat . {b:Nat . 0}})
+												    [exp:(Nat -> (Nat -> Nat)) <-
+												        {a:Nat . {b:Nat
+												    	.
+												            (ifz ((sum a) b) :-/
+													        (ifz a 0
+													            (ifz b (++ 0)
+													                ((prod a) (((! expr) a) (-- b)))
+													            )
+													        )
+													    )
+												        }}
+												        ($ (:= expr exp)
+													   // Just realized you could insert little tests along the way
+												           (ifz ((eq ((exp (++ two)) (++ two))) ((sum twenty) seven)) :-/ ())
+													   [repeatr:(Ref (((Nat -> Nat) -> (Nat -> Nat)) -> (Nat ->
+													                 ((Nat -> Nat) -> (Nat -> Nat))))) <-
+													        (ref {fn:((Nat -> Nat) -> (Nat -> Nat)) . {n:Nat . fn}})
+														[repeat:(((Nat -> Nat) -> (Nat -> Nat)) -> (Nat ->
+														         ((Nat -> Nat) -> (Nat -> Nat)))) <-
+														    {fn:((Nat -> Nat) -> (Nat -> Nat)) . {n:Nat
+														    .
+														        (ifz n {q:(Nat -> Nat) . q}
+															    {q:(Nat -> Nat) . (fn ((((! repeatr) fn) (-- n)) q))}
+															)
+														    }}
+														    ($ (:= repeatr repeat)
+														       [diagpair:(Nat -> (Nat -> Nat)) <-
+														          {n:Nat
+															  .
+															      (((repeat {p:(Nat -> Nat)
+															               .
+																           (ifz (-- (first p))
+																	       (ifz (second ((divmod (second p)) two))
+																	           ((pair (++ (first p))) (-- (second p)))
+																		   ((pair (first p)) (++ (second p)))
+																	       )
+																	       (ifz (-- (second p))
+																	           (ifz (second ((divmod (first p)) two))
+																		       ((pair (++ (first p))) (second p))
+																		       ((pair (-- (first p))) (++ (second p)))
+																		   )
+																		   (ifz (second ((divmod ((sum (first p)) (second p))) two))
+																		       ((pair (-- (first p))) (++ (second p)))
+																		       ((pair (++ (first p))) (-- (second p)))
+																		   )
+																	       )
+																	   )
+																       })
+															       n
+															     )
+															     ((pair (++ 0)) (++ 0))
+															     )
+															  }
+															  ($
+															     (ifz ((eq (second (diagpair (first ((divmod twenty) two))))) (++ 0)) :-/ ())
+															     [fermatr:(Ref (Unit -> Unit)) <-
+															         (ref {u:Unit . ()})
+																 [i:(Ref Nat) <- (ref 0)
+																     // This function should run forever, in which case Fermat's Last Theorem is false
+																     // in which case it would eventually reach :-/
+																     // This might be testable by removing one (++ ) from each (second ps),
+																     // but that has not produced the Fail corresponding to discovering a Pythagorean triple
+																     // which may be because of how long it might take to find one
+																     [fermat:(Unit -> Unit) <-
+																         {u:Unit
+																     	 .
+																	     [p:(Nat -> Nat) <- (diagpair (! i))
+																	         [pf:(Nat -> Nat) <- (diagpair (-- (first p)))
+																		     [ps:(Nat -> Nat) <- (diagpair (-- (second p)))
+																		         (ifz ((eq ((sum ((exp (first pf)) (++ (++ (second ps)))))
+																			            ((exp (second pf)) (++ (++ (second ps))))))
+																			       ((exp (first ps)) (++ (++ (second ps)))))
+																			      ($ (:= i (++ (! i)))
+																			         ((! fermatr) ())
+																			      )
+																			      :-/
+																			 )
+																		     ]
+																		 ]
+																	     ]
+																	 }
+																	 ($ (:= fermatr fermat)
+																	    (fermat ())
+																	 )
+																     ]
+																 ]       
+														             ]
+															  )
+														       ]
+														    )
+														]
+													   ]
+												        )
+												    ]
+												]
+											    ]
+											]
+										    ]
+										]
+									    ]
+									 )
+								     ]
+								 ]
+							     ]
+							 ]
+						     ]
+						 ]
+					     ]
+					  )
+				      ]
+				  ]
+			       )
+			   ]
+		       ]
+		    )
+	       ]
+	   ]
+	)
+    ]
+]

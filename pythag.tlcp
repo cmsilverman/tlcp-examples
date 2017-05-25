@@ -1,0 +1,125 @@
+// Division and mod with pairs
+[sumr : (Ref (Nat -> (Nat -> Nat))) <-
+    (ref {a:Nat . {b:Nat . 0}})
+    [sum : (Nat -> (Nat -> Nat)) <-
+        {a:Nat . {b:Nat
+	.
+	    (ifz a b (((! sumr) (-- a)) (++ b)))
+	}}
+	($ (:= sumr sum)
+	   [prodr : (Ref (Nat -> (Nat -> Nat))) <-
+	       (ref {a:Nat . {b:Nat . 0}})
+	       [prod : (Nat -> (Nat -> Nat)) <-
+	            {a:Nat . {b:Nat
+		    .
+		        (ifz a 0 ((sum b) (((! prodr) (-- a)) b)))
+		    }}
+		    ($ (:= prodr prod)
+		       [factr : (Ref (Nat -> Nat)) <-
+		           (ref {a:Nat . 0})
+			   [fact : (Nat -> Nat) <-
+			       {n:Nat
+			       .
+			           (ifz n (++ 0) ((prod n) ((! factr) (-- n))))
+			       }
+			       ($ (:= factr fact)
+			          [diffr : (Ref (Nat -> (Nat -> Nat))) <-
+				      (ref {a:Nat . {b:Nat . 0}})
+				      [diff : (Nat -> (Nat -> Nat)) <-
+				          {a:Nat . {b:Nat
+					  .
+					      (ifz a 0 (ifz b a (((! diffr) (-- a)) (-- b))))
+					  }}
+					  ($ (:= diffr diff)
+					     [lte : (Nat -> (Nat -> Nat)) <-
+						 {a:Nat . {b:Nat
+						 .
+						     (ifz ((diff a) b) (++ 0) 0)
+					         }}
+						 [lt : (Nat -> (Nat -> Nat)) <-
+						     {a:Nat . {b:Nat
+						     .
+						         (ifz ((lte a) b) 0 (ifz ((lte b) a) (++ 0) 0))
+						     }}
+						     [pair : (Nat -> (Nat -> (Nat -> Nat))) <-
+						         {f:Nat . {s:Nat
+							 .
+							     {sel:Nat . (ifz sel f s)}
+							 }}
+							 [first : ((Nat -> Nat) -> Nat) <-
+							     {p:(Nat -> Nat) . (p 0)}
+							     [second : ((Nat -> Nat) -> Nat) <-
+							         {p:(Nat -> Nat) . (p (++ 0))}
+								 [divmodr : (Ref (Nat -> (Nat -> (Nat -> Nat)))) <-
+								     (ref {a:Nat . {b:Nat . {sel:Nat . 0}}})
+								     [divmod : (Nat -> (Nat -> (Nat -> Nat))) <-
+								         {a:Nat . {b:Nat
+									 .
+									     (ifz b :-/
+									         (ifz ((lt a) b)
+										     [v:(Nat -> Nat) <- (((! divmodr) ((diff a) b)) b)
+										         ((pair (++ (first v))) (second v))
+										     ]
+										     ((pair 0) a)
+										 )
+								             )
+									 }}
+									 ($ (:= divmodr divmod)
+									    [two:Nat <- (++ (++ 0))
+									        [three:Nat <- (++ two)
+										    [twenty:Nat <- ((prod (++ three)) (++ (++ three)))
+										        [seven:Nat <- ((sum three) (++ (++ two)))
+											    [eq: (Nat -> (Nat -> Nat)) <-
+											        {a:Nat . {b:Nat
+												.
+												    ((prod ((lte a) b)) ((lte b) a))
+												}}
+												// Checks if a^2 + b^2 = c^2
+											    	[pythags: (Nat -> (Nat -> (Nat -> Nat))) <-
+											            {a:Nat . {b:Nat . {c:Nat
+												    .
+												        (ifz ((eq ((sum ((prod a) a)) ((prod b) b))) ((prod c) c))
+												            0
+												            (++ 0)
+												        )
+												    }}}
+												    // Checks if a, b, and c form a Pythagorean triple in any order
+												    [pythag: (Nat -> (Nat -> (Nat -> Nat))) <-
+												        {a:Nat . {b:Nat . {c:Nat
+													.
+													    (ifz ((prod ((lt c) a)) ((lt b) a))
+														(ifz ((prod ((lt c) b)) ((lt a) b))
+														    (((pythags a) b) c)
+														    (((pythags a) c) b)												
+														)
+													        (((pythags b) c) a)
+													    )	
+													}}}
+													(((pythag ((sum three) two)) three) (++ three))
+												    ]
+												]
+										            ]
+											]
+										    ]
+										]
+									    ]
+									 )
+								     ]
+								 ]
+							     ]
+							 ]
+						     ]
+						 ]
+					     ]
+					  )
+				      ]
+				  ]
+			       )
+			   ]
+		       ]
+		    )
+	       ]
+	   ]
+	)
+    ]
+]
